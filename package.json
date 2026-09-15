@@ -22,6 +22,13 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "dev": "node index.js"
+    "dev": "PORT=8080 nodemon index.js",
+    "prod": "node --env-file=.env index.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
