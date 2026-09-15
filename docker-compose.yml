@@ -1,0 +1,18 @@
+# Интересный факт - согласно доке, предпочтительно использовать нейминг и расширение файла compose.yaml
+# "Compose prefers the canonical compose.yaml"
+# https://docs.docker.com/compose/intro/compose-application-model/
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    ports: [ "8080:8080" ]
+    environment:
+      - APP_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
