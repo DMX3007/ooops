@@ -1,0 +1,27 @@
+{
+  "name": "ooopsapp",
+  "version": "1.0.0",
+  "description": "Little test devOps app",
+  "keywords": [
+    "devops",
+    "telecoma",
+    "test",
+    "lol"
+  ],
+  "homepage": "https://github.com/DMX3007/ooops#readme",
+  "bugs": {
+    "url": "https://github.com/DMX3007/ooops/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DMX3007/ooops.git"
+  },
+  "license": "ISC",
+  "author": "unknown",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "dev": "node index.js"
+  }
+}
