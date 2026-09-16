@@ -27,4 +27,5 @@ tar -czf backups/config-$(date +%Y-%m-%d-%H-%M-%S).tar.gz config
 check_failure "Backup failed."
 
 echo "Backup completed successfully."
+
 exit 0
