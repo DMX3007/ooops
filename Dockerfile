@@ -1,15 +1,17 @@
 FROM node:24-alpine
 
-RUN mkdir -p /home/app/config
-
 WORKDIR /home/app
 
 COPY ./package*.json  /home/app
 
-RUN npm ci
+RUN npm ci && npm cache clean --force
 
 COPY . .
-COPY env.example .env
 
-RUN mv env.example .env
+RUN cp env.example .env && mkdir -p config
+
+RUN chown -R node:node /home/app
+
+USER node
+
 CMD ["node", "--env-file=.env", "index.js"]
