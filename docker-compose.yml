@@ -6,12 +6,14 @@ services:
   app:
     build:
       dockerfile: Dockerfile
-    ports: [ "8080:8080" ]
+    container_name: junior-devops-app
+    ports:
+      - "${PORT}:${PORT}"
     environment:
-      - APP_ENV=production
+      APP_ENV: ${APP_ENV}
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/health" ]
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:${PORT}/health || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 3

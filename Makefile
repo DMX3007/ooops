@@ -1,10 +1,10 @@
-CONTAINER_NAME = ooops-app-1
-IMAGE_NAME = ooops-app:latest
+CONTAINER_NAME = junior-devops-app
+IMAGE_NAME = junior-devops-app:latest
 .DEFAULT_GOAL := help
 
 .PHONY: ps
 ps: ## see docker processes
-	docker ps
+	@docker ps
 
 .PHONY: build
 build: ## build docker image
@@ -12,11 +12,11 @@ build: ## build docker image
 
 .PHONY: up
 up: ## up containers
-	@docker compose up -d
+	@docker compose --env-file .env up -d
 
 .PHONY: down
 down: ## down containers
-	@docker compose down
+	@docker compose --env-file .env down
 
 .PHONY: logs
 logs: ## see docker logs
@@ -27,11 +27,22 @@ backup: ## do backups
 
 .PHONY: terminal
 terminal: ## go into container
-	docker exec -it $(CONTAINER_NAME) /bin/sh
+	@docker exec -it $(CONTAINER_NAME) /bin/sh
 
-.PHONY: rmimage
-rmimage: ## remove docker image
-	docker rmi $(IMAGE_NAME)
+.PHONY: destroy
+destroy: ## stop container, remove image and volumes
+	@docker compose --env-file .env down --volumes
+	@if [ -n "$$(docker images -q $(IMAGE_NAME))" ]; then \
+		docker rmi $(IMAGE_NAME); \
+	else \
+		echo "Образ $(IMAGE_NAME) уже удален или не существовал."; \
+	fi
+
+.PHONY: hc
+hc: ## check detailed healthcheck logs
+	@docker inspect --format='{{json .State.Health}}' $(CONTAINER_NAME) | jq . 2>/dev/null \
+		|| docker inspect --format='{{json .State.Health}}' $(CONTAINER_NAME)
+
 
 .PHONY: help
 help: ## show help
