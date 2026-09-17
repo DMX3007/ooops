@@ -2,7 +2,7 @@ const express = require('express')
 
 const app = express()
 const DEFAULT_PORT = 8080
-const port = process.env.PORT || DEFAULT_PORT
+const port = process.env.APP_PORT || DEFAULT_PORT
 
 app.use(express.json())
 

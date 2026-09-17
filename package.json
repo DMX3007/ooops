@@ -5,8 +5,7 @@
   "keywords": [
     "devops",
     "telecoma",
-    "test",
-    "lol"
+    "test"
   ],
   "homepage": "https://github.com/DMX3007/ooops#readme",
   "bugs": {
@@ -17,12 +16,11 @@
     "url": "git+https://github.com/DMX3007/ooops.git"
   },
   "license": "ISC",
-  "author": "unknown",
+  "author": "earielle",
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "test",
-    "dev": "PORT=8080 nodemon index.js",
+    "dev": "APP_PORT=8080 nodemon index.js",
     "prod": "node --env-file=.env index.js"
   },
   "dependencies": {

@@ -2,16 +2,16 @@ FROM node:24-alpine
 
 WORKDIR /home/app
 
-COPY ./package*.json  /home/app
+COPY package*.json ./
 
-RUN npm ci && npm cache clean --force
+RUN npm ci --omit=dev && npm cache clean --force
 
 COPY . .
-
-RUN cp env.example .env && mkdir -p config
 
 RUN chown -R node:node /home/app
 
 USER node
 
-CMD ["node", "--env-file=.env", "index.js"]
+EXPOSE 8080
+
+CMD ["node", "index.js"]

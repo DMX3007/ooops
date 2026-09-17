@@ -23,7 +23,7 @@ logs: ## see docker logs
 	@docker compose logs -f
 .PHONY: backup
 backup: ## do backups
-	@./scripts/backup.sh
+	@./backup.sh
 
 .PHONY: terminal
 terminal: ## go into container
