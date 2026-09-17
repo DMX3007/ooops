@@ -7,14 +7,46 @@ services:
     build:
       dockerfile: Dockerfile
     container_name: junior-devops-app
-    ports:
-      - "${PORT}:${PORT}"
     environment:
+      APP_PORT: ${APP_PORT}
       APP_ENV: ${APP_ENV}
-    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
     healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://localhost:${PORT}/health || exit 1" ]
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:${APP_PORT}/health || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 10s
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "${KUMA_PORT}:3001"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3001" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - kuma-data:/app/data
+
+volumes:
+  kuma-data:
+
+networks:
+  app-network:
+    driver: bridge

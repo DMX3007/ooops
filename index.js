@@ -1,13 +1,13 @@
 const express = require('express')
 
 const app = express()
-const DEFAULT_PORT = 3000
+const DEFAULT_PORT = 8080
 const port = process.env.PORT || DEFAULT_PORT
 
 app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.send('')
+    res.status(200).send('App is running')
 })
 
 app.get('/health', (req, res) => {
