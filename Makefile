@@ -43,6 +43,9 @@ hc: ## check detailed healthcheck logs
 	@docker inspect --format='{{json .State.Health}}' $(CONTAINER_NAME) | jq . 2>/dev/null \
 		|| docker inspect --format='{{json .State.Health}}' $(CONTAINER_NAME)
 
+.PHONY: test-nginx
+test-nginx: ## Test nginx reverse proxy
+	@curl -sI http://localhost:8080/health | grep "X-Reverse-Proxy: nginx"
 
 .PHONY: help
 help: ## show help

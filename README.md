@@ -166,4 +166,13 @@ Pipeline выполняет базовую проверку проекта:
 
 ## Reverse Proxy
 
-Добавлен nginx, nginx.conf
+Добавлен nginx, конфиг расположен по пути  nginx/nginx.conf
+
+Для проверки можно воспользоваться командой
+
+```bash
+make test-nginx
+```
+
+В случае успеха должен быть отображен заголовок 
+"X-Reverse-Proxy: nginx"
