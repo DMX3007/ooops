@@ -1,6 +1,15 @@
 CONTAINER_NAME = junior-devops-app
 IMAGE_NAME = junior-devops-app:latest
 .DEFAULT_GOAL := help
+ENV_FILE := .env
+ENV_EXAMPLE := env.example
+
+start: env build up ## quick start
+
+env: ## сreate .env from example
+	@if [ ! -f $(ENV_FILE) ]; then \
+		cp $(ENV_EXAMPLE) $(ENV_FILE); \
+	fi
 
 .PHONY: ps
 ps: ## see docker processes
@@ -11,11 +20,11 @@ build: ## build docker image
 	@docker build -t junior-devops-app .
 
 .PHONY: up
-up: ## up containers
+up: env ## up containers
 	@docker compose --env-file .env up -d
 
 .PHONY: down
-down: ## down containers
+down: env ## down containers
 	@docker compose --env-file .env down
 
 .PHONY: logs
@@ -30,7 +39,7 @@ terminal: ## go into container
 	@docker exec -it $(CONTAINER_NAME) /bin/sh
 
 .PHONY: destroy
-destroy: ## stop container, remove image and volumes
+destroy: env ## stop container, remove image and volumes
 	@docker compose --env-file .env down --volumes
 	@if [ -n "$$(docker images -q $(IMAGE_NAME))" ]; then \
 		docker rmi $(IMAGE_NAME); \

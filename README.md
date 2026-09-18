@@ -26,9 +26,7 @@
 Самый простой способ запустить весь проект:
 
 ```bash
-make build
-make up
-make ps
+make start
 ```
 
 Проверить состояние контейнеров:
@@ -109,6 +107,7 @@ make help
 Основные команды:
 
 ```text
+make start    Quick start project
 make build    Build Docker image
 make up       Start services
 make down     Stop services
